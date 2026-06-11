@@ -1,0 +1,16 @@
+{
+  "name": "campus-iq-mcp-servers",
+  "version": "1.0.0",
+  "description": "MCP Data Servers for CampusIQ",
+  "main": "index.js",
+  "scripts": {
+    "library": "node library/index.js",
+    "cafeteria": "node cafeteria/index.js",
+    "events": "node events/index.js",
+    "academics": "node academics/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}

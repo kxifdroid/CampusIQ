@@ -1,0 +1,144 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { BookOpen, Search, Users, Clock, MapPin } from 'lucide-react';
+import ChatPanel from '@/components/chat/ChatPanel';
+
+interface Book {
+  id: number; title: string; author: string; subject: string;
+  available: boolean; location: string; dueDate: string | null; isbn: string;
+}
+interface LibraryStatus {
+  name: string; hours: string; availableSeats: number; totalSeats: number;
+  availableBooks: number; totalBooks: number; sections: string[];
+}
+
+export default function LibraryPage() {
+  const [status, setStatus] = useState<LibraryStatus | null>(null);
+  const [books, setBooks] = useState<Book[]>([]);
+  const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  const fetchBooks = async (q = '') => {
+    try {
+      const res = await fetch(`/api/proxy/library/search?q=${encodeURIComponent(q)}`);
+      if (res.ok) setBooks(await res.json());
+    } catch { /* ignore */ }
+  };
+
+  useEffect(() => {
+    async function init() {
+      try {
+        const res = await fetch('/api/proxy/library/status');
+        if (res.ok) setStatus(await res.json());
+      } catch { /* ignore */ }
+      await fetchBooks();
+      setLoading(false);
+    }
+    init();
+  }, []);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    fetchBooks(search);
+  };
+
+  return (
+    <div className="max-w-7xl mx-auto space-y-6">
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-xl bg-[#7C3AED]/20 flex items-center justify-center">
+          <BookOpen size={20} className="text-[#7C3AED]" />
+        </div>
+        <div>
+          <h1 className="text-xl font-bold">Library</h1>
+          <p className="text-xs text-white/40">IIT Roorkee Central Library</p>
+        </div>
+      </div>
+
+      {status && (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {[
+            { label: 'Available Seats', value: status.availableSeats, of: status.totalSeats, icon: Users, color: 'text-[#06B6D4]', bg: 'bg-[#06B6D4]/10' },
+            { label: 'Available Books', value: status.availableBooks, of: status.totalBooks, icon: BookOpen, color: 'text-[#7C3AED]', bg: 'bg-[#7C3AED]/10' },
+          ].map((stat, i) => (
+            <div key={i} className="glass-card p-4">
+              <div className={`w-7 h-7 rounded-lg ${stat.bg} flex items-center justify-center mb-2`}>
+                <stat.icon size={14} className={stat.color} />
+              </div>
+              <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
+              <p className="text-[10px] text-white/40">{stat.label} / {stat.of} total</p>
+            </div>
+          ))}
+          <div className="glass-card p-4 col-span-2">
+            <div className="flex items-center gap-1.5 mb-1">
+              <Clock size={13} className="text-amber-400" />
+              <span className="text-[10px] text-white/50">Hours</span>
+            </div>
+            <p className="text-xs text-white/80">{status.hours}</p>
+            <div className="flex flex-wrap gap-1.5 mt-2">
+              {status.sections.map((s, i) => (
+                <span key={i} className="text-[10px] px-2 py-0.5 bg-white/[0.05] rounded-full text-white/50">{s}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="lg:grid lg:grid-cols-3 gap-6 space-y-6 lg:space-y-0">
+        <div className="lg:col-span-2 space-y-4">
+          <form onSubmit={handleSearch} className="flex gap-2">
+            <div className="relative flex-1">
+              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
+              <input
+                type="text"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                placeholder="Search books by title, author, or subject..."
+                className="w-full pl-9 pr-4 py-2.5 bg-[#16161E] border border-white/[0.08] rounded-xl text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#7C3AED]/50"
+              />
+            </div>
+            <button type="submit" className="px-4 py-2.5 bg-[#7C3AED] hover:bg-[#6D28D9] rounded-xl text-sm font-medium transition-colors">
+              Search
+            </button>
+          </form>
+
+          {loading ? (
+            <div className="space-y-2">{[1,2,3,4,5].map(i => <div key={i} className="skeleton h-16 rounded-xl" />)}</div>
+          ) : (
+            <div className="space-y-2">
+              {books.map(book => (
+                <div key={book.id} className="glass-card p-4 flex items-center gap-4">
+                  <div className={`w-2 h-10 rounded-full flex-shrink-0 ${book.available ? 'bg-emerald-500' : 'bg-red-500'}`} />
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-sm truncate">{book.title}</p>
+                    <div className="flex items-center gap-3 mt-0.5">
+                      <span className="text-xs text-white/50">{book.author}</span>
+                      <span className="text-[10px] px-1.5 py-0.5 bg-white/[0.06] rounded text-white/40">{book.subject}</span>
+                    </div>
+                  </div>
+                  <div className="text-right flex-shrink-0">
+                    <span className={`text-[11px] font-semibold ${book.available ? 'text-emerald-400' : 'text-red-400'}`}>
+                      {book.available ? '✓ Available' : 'Checked Out'}
+                    </span>
+                    <p className="text-[10px] text-white/30 mt-0.5 flex items-center gap-1 justify-end">
+                      <MapPin size={9} />{book.location}
+                    </p>
+                    {book.dueDate && (
+                      <p className="text-[10px] text-amber-400">Due: {book.dueDate}</p>
+                    )}
+                  </div>
+                </div>
+              ))}
+              {books.length === 0 && (
+                <div className="text-center py-12 text-white/30 text-sm">No books found for "{search}"</div>
+              )}
+            </div>
+          )}
+        </div>
+        <div>
+          <ChatPanel compact />
+        </div>
+      </div>
+    </div>
+  );
+}
