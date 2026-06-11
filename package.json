@@ -6,11 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "postinstall": "prisma generate",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
     "dev:all": "concurrently \"node mcp-servers/library/index.js\" \"node mcp-servers/cafeteria/index.js\" \"node mcp-servers/events/index.js\" \"node mcp-servers/academics/index.js\" \"next dev\""
-  },
+      },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.0",
     "@google/generative-ai": "^0.21.0",
