@@ -24,7 +24,7 @@ export default function CafeteriaWidget() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/proxy/cafeteria/menu`);
+        const res = await fetch(`/api/proxy/cafeteria/menu`);
         if (res.ok) {
           const data = await res.json();
           setMenu(data.menu);

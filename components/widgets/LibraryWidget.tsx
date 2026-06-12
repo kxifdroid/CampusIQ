@@ -29,8 +29,8 @@ export default function LibraryWidget() {
     async function fetchData() {
       try {
         const [statusRes, booksRes] = await Promise.all([
-          fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/proxy/library/status`),
-          fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/proxy/library/search?q=`),
+          fetch(`/api/proxy/library/status`),
+          fetch(`/api/proxy/library/search?q=`),
         ]);
         if (statusRes.ok) setStatus(await statusRes.json());
         if (booksRes.ok) {

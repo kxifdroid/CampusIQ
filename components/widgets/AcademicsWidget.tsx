@@ -27,8 +27,8 @@ export default function AcademicsWidget() {
     async function fetchData() {
       try {
         const [deadRes, notRes] = await Promise.all([
-          fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/proxy/academics/deadlines`),
-          fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/proxy/academics/notices`),
+          fetch(`/api/proxy/academics/deadlines`),
+          fetch(`/api/proxy/academics/notices`),
         ]);
         if (deadRes.ok) setDeadlines((await deadRes.json()).slice(0, 2));
         if (notRes.ok) setNotices((await notRes.json()).filter((n: Notice) => n.important).slice(0, 2));

@@ -10,8 +10,6 @@ export default function SignInForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
-  const origin = typeof window !== "undefined" ? window.location.origin : (process.env.NEXT_PUBLIC_APP_URL || "");
-  const absoluteCallbackUrl = origin.endsWith("/") ? origin.slice(0, -1) + callbackUrl : origin + callbackUrl;
   const [mode, setMode] = useState<AuthMode>("signin");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -42,7 +40,7 @@ export default function SignInForm() {
         email,
         password,
         redirect: false,
-        callbackUrl: absoluteCallbackUrl,
+        callbackUrl,
       });
 
       if (result?.error) {
@@ -77,7 +75,7 @@ export default function SignInForm() {
           setError("");
           setLoading(true);
           try {
-            const result = await signIn("credentials", { guest: "true", redirect: false, callbackUrl: absoluteCallbackUrl });
+            const result = await signIn("credentials", { guest: "true", redirect: false, callbackUrl });
             if (result?.error) {
               setError("Guest sign-in failed.");
             } else {

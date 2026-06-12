@@ -28,7 +28,7 @@ export default function EventsWidget() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/proxy/events/events`);
+        const res = await fetch(`/api/proxy/events/events`);
         if (res.ok) {
           setEvents((await res.json()).slice(0, 3));
         }

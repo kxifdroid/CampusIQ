@@ -17,23 +17,31 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "Password must be at least 8 characters." }, { status: 400 });
   }
 
-  const existingUser = await prisma.user.findUnique({
-    where: { email: normalizedEmail },
-  });
+  try {
+    const existingUser = await prisma.user.findUnique({
+      where: { email: normalizedEmail },
+    });
 
-  if (existingUser) {
-    return NextResponse.json({ message: "An account already exists for this email." }, { status: 409 });
+    if (existingUser) {
+      return NextResponse.json({ message: "An account already exists for this email." }, { status: 409 });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    await prisma.user.create({
+      data: {
+        name: normalizedName,
+        email: normalizedEmail,
+        password: hashedPassword,
+      },
+    });
+
+    return NextResponse.json({ message: "Account created." }, { status: 201 });
+  } catch (error) {
+    console.error("Registration error:", error);
+    return NextResponse.json({ 
+      message: "An error occurred during registration.",
+      error: error instanceof Error ? error.message : "Unknown error"
+    }, { status: 500 });
   }
-
-  const hashedPassword = await bcrypt.hash(password, 12);
-
-  await prisma.user.create({
-    data: {
-      name: normalizedName,
-      email: normalizedEmail,
-      password: hashedPassword,
-    },
-  });
-
-  return NextResponse.json({ message: "Account created." }, { status: 201 });
 }

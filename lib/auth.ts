@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
+  secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
   },
@@ -23,21 +24,26 @@ CredentialsProvider({
       async authorize(credentials) {
         // Guest sign-in: create a temporary guest user with a unique guest email
         if (credentials?.guest === "true" || credentials?.guest === "1") {
-          const guestName = `Guest-${Math.random().toString(36).substring(2, 8)}`;
-          const guestEmail = `guest_${Date.now()}_${Math.random().toString(36).slice(2,8)}@guest.local`;
-          const guestUser = await prisma.user.create({
-            data: {
-              name: guestName,
-              email: guestEmail,
-            },
-          });
+          try {
+            const guestName = `Guest-${Math.random().toString(36).substring(2, 8)}`;
+            const guestEmail = `guest_${Date.now()}_${Math.random().toString(36).slice(2,8)}@guest.local`;
+            const guestUser = await prisma.user.create({
+              data: {
+                name: guestName,
+                email: guestEmail,
+              },
+            });
 
-          return {
-            id: guestUser.id,
-            name: guestUser.name,
-            email: guestUser.email,
-            image: guestUser.image,
-          };
+            return {
+              id: guestUser.id,
+              name: guestUser.name,
+              email: guestUser.email,
+              image: guestUser.image,
+            };
+          } catch (error) {
+            console.error("Guest login error:", error);
+            return null;
+          }
         }
 
     const email = credentials?.email?.toLowerCase().trim();
