@@ -8,20 +8,29 @@ const globalForPrisma = globalThis as unknown as {
 const databaseUrl = process.env.DATABASE_URL || "file:./dev.db";
 const isSqlite = databaseUrl.startsWith("file:") || databaseUrl.endsWith(".db");
 
+console.log(`[Prisma] Using ${isSqlite ? 'SQLite' : 'Remote'} database.`);
+
 function createPrismaClient() {
-  if (isSqlite) {
-    const adapter = new PrismaBetterSqlite3({
-      url: databaseUrl,
-    });
+  try {
+    if (isSqlite) {
+      console.log("[Prisma] Initializing with SQLite adapter.");
+      const adapter = new PrismaBetterSqlite3({
+        url: databaseUrl,
+      });
+      return new PrismaClient({
+        adapter,
+        log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
+      });
+    }
+    
     return new PrismaClient({
-      adapter,
       log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
     });
+  } catch (error) {
+    console.error("[Prisma] Failed to initialize client:", error);
+    // Return a dummy client or throw? Better to throw so it's caught in the route
+    throw error;
   }
-  
-  return new PrismaClient({
-    log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
-  });
 }
 
 export const prisma = globalForPrisma.prisma ?? createPrismaClient();

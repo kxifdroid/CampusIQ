@@ -4,6 +4,10 @@ import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
 
+if (process.env.NODE_ENV === "production" && !process.env.NEXTAUTH_SECRET) {
+  console.warn("[NextAuth] Warning: NEXTAUTH_SECRET is not set. Sign-in will likely fail in production.");
+}
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
@@ -13,6 +17,7 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/auth/signin",
   },
+  debug: process.env.NODE_ENV === "development",
   providers: [
 CredentialsProvider({
       name: "Email and password",
@@ -27,6 +32,7 @@ CredentialsProvider({
           try {
             const guestName = `Guest-${Math.random().toString(36).substring(2, 8)}`;
             const guestEmail = `guest_${Date.now()}_${Math.random().toString(36).slice(2,8)}@guest.local`;
+            console.log(`[NextAuth] Attempting to create guest user: ${guestEmail}`);
             const guestUser = await prisma.user.create({
               data: {
                 name: guestName,
@@ -41,7 +47,7 @@ CredentialsProvider({
               image: guestUser.image,
             };
           } catch (error) {
-            console.error("Guest login error:", error);
+            console.error("[NextAuth] Guest login error:", error);
             return null;
           }
         }

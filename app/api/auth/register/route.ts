@@ -18,11 +18,13 @@ export async function POST(req: Request) {
   }
 
   try {
+    console.log(`[Register] Attempting to create user: ${normalizedEmail}`);
     const existingUser = await prisma.user.findUnique({
       where: { email: normalizedEmail },
     });
 
     if (existingUser) {
+      console.log(`[Register] User already exists: ${normalizedEmail}`);
       return NextResponse.json({ message: "An account already exists for this email." }, { status: 409 });
     }
 
@@ -36,11 +38,23 @@ export async function POST(req: Request) {
       },
     });
 
+    console.log(`[Register] User created successfully: ${normalizedEmail}`);
     return NextResponse.json({ message: "Account created." }, { status: 201 });
   } catch (error) {
-    console.error("Registration error:", error);
+    console.error("[Register] Error:", error);
+    
+    // Provide a more helpful message for common deployment errors
+    let errorMessage = "An error occurred during registration.";
+    if (error instanceof Error) {
+      if (error.message.includes("read-only") || error.message.includes("EROFS")) {
+        errorMessage = "Database is read-only. Please use a remote database for Vercel deployment.";
+      } else {
+        errorMessage = error.message;
+      }
+    }
+
     return NextResponse.json({ 
-      message: "An error occurred during registration.",
+      message: errorMessage,
       error: error instanceof Error ? error.message : "Unknown error"
     }, { status: 500 });
   }
