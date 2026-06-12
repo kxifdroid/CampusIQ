@@ -8,7 +8,14 @@ const globalForPrisma = globalThis as unknown as {
 const databaseUrl = process.env.DATABASE_URL || "file:./dev.db";
 const isSqlite = databaseUrl.startsWith("file:") || databaseUrl.endsWith(".db");
 
-console.log(`[Prisma] Using ${isSqlite ? 'SQLite' : 'Remote'} database.`);
+const maskedUrl = databaseUrl.includes(":") 
+  ? `${databaseUrl.split(":")[0]}:****` 
+  : "****";
+console.log(`[Prisma] Using ${isSqlite ? 'SQLite' : 'Remote'} database. URL: ${maskedUrl}`);
+
+if (isSqlite && process.env.VERCEL) {
+  console.warn("[Prisma] WARNING: You are using SQLite on Vercel. This database is read-only and ephemeral. Registration and sign-in will fail. Please use a remote database like Vercel Postgres or Supabase.");
+}
 
 function createPrismaClient() {
   try {
