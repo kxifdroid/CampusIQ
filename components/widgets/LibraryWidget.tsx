@@ -61,45 +61,45 @@ export default function LibraryWidget() {
     <div className="glass-card p-5">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-[#7C3AED]/20 flex items-center justify-center">
-            <BookOpen size={15} className="text-[#7C3AED]" />
+          <div className="w-8 h-8 rounded-lg bg-[#E8E6FF] flex items-center justify-center">
+            <BookOpen size={15} className="text-[#7C6FF7]" />
           </div>
-          <h3 className="font-semibold text-sm">Library</h3>
+          <h3 className="text-sm font-medium text-[#1A1A2E]">Library</h3>
         </div>
-        <span className="text-xs px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-400 font-medium">Open</span>
+        <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#6BCB8B]/15 text-[#6BCB8B] font-medium">Open</span>
       </div>
 
       {status && (
         <div className="grid grid-cols-2 gap-2 mb-4">
-          <div className="bg-white/[0.04] rounded-xl p-3">
+          <div className="bg-[#F9F8FF] border border-[#E4E2F0] rounded-xl p-3">
             <div className="flex items-center gap-1.5 mb-1">
-              <Users size={12} className="text-[#06B6D4]" />
-              <span className="text-[10px] text-white/50 uppercase tracking-wide">Seats</span>
+              <Users size={12} className="text-[#7C6FF7]" />
+              <span className="text-[10px] text-[#6B6B8A] uppercase tracking-wide">Seats</span>
             </div>
-            <p className="text-lg font-bold text-[#06B6D4]">{status.availableSeats}</p>
-            <p className="text-[10px] text-white/40">of {status.totalSeats} free</p>
+            <p className="text-lg font-bold text-[#7C6FF7]">{status.availableSeats}</p>
+            <p className="text-[10px] text-[#6B6B8A]/80">of {status.totalSeats} free</p>
           </div>
-          <div className="bg-white/[0.04] rounded-xl p-3">
+          <div className="bg-[#F9F8FF] border border-[#E4E2F0] rounded-xl p-3">
             <div className="flex items-center gap-1.5 mb-1">
-              <Clock size={12} className="text-[#7C3AED]" />
-              <span className="text-[10px] text-white/50 uppercase tracking-wide">Hours</span>
+              <Clock size={12} className="text-[#7C6FF7]" />
+              <span className="text-[10px] text-[#6B6B8A] uppercase tracking-wide">Hours</span>
             </div>
-            <p className="text-[11px] font-medium text-white/70 leading-tight">8AM–11PM</p>
-            <p className="text-[10px] text-white/40">Mon–Sat</p>
+            <p className="text-[11px] font-medium text-[#1A1A2E] leading-tight">8AM–11PM</p>
+            <p className="text-[10px] text-[#6B6B8A]/80">Mon–Sat</p>
           </div>
         </div>
       )}
 
       <div>
-        <p className="text-[10px] text-white/40 uppercase tracking-wider mb-2">Available Books</p>
+        <p className="text-[10px] text-[#6B6B8A] uppercase tracking-wider mb-2">Available Books</p>
         <div className="space-y-1.5">
           {books.map(book => (
-            <div key={book.id} className="flex items-center justify-between py-1 border-b border-white/[0.04] last:border-0">
+            <div key={book.id} className="flex items-center justify-between py-1 border-b border-[#E4E2F0] last:border-0">
               <div className="min-w-0">
-                <p className="text-xs font-medium text-white/90 truncate">{book.title}</p>
-                <p className="text-[10px] text-white/40">{book.author}</p>
+                <p className="text-xs font-medium text-[#1A1A2E] truncate">{book.title}</p>
+                <p className="text-[10px] text-[#6B6B8A]">{book.author}</p>
               </div>
-              <span className="text-[10px] text-emerald-400 font-medium ml-2 flex-shrink-0">✓ Free</span>
+              <span className="text-[10px] text-[#6BCB8B] font-medium ml-2 flex-shrink-0">✓ Free</span>
             </div>
           ))}
         </div>

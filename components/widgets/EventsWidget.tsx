@@ -14,11 +14,11 @@ interface Event {
 }
 
 const categoryColors: Record<string, string> = {
-  tech: 'bg-violet-500/15 text-violet-400',
-  cultural: 'bg-pink-500/15 text-pink-400',
-  sports: 'bg-emerald-500/15 text-emerald-400',
-  workshop: 'bg-cyan-500/15 text-cyan-400',
-  seminar: 'bg-amber-500/15 text-amber-400',
+  tech: 'bg-[#E8E6FF] text-[#7C6FF7]',
+  cultural: 'bg-[#F28B82]/15 text-[#F28B82]',
+  sports: 'bg-[#6BCB8B]/15 text-[#6BCB8B]',
+  workshop: 'bg-[#E8E6FF] text-[#7C6FF7]',
+  seminar: 'bg-[#F5C97A]/15 text-[#F5C97A]',
 };
 
 export default function EventsWidget() {
@@ -56,23 +56,23 @@ export default function EventsWidget() {
     <div className="glass-card p-5">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-pink-500/20 flex items-center justify-center">
-            <CalendarDays size={15} className="text-pink-400" />
+          <div className="w-8 h-8 rounded-lg bg-[#E8E6FF] flex items-center justify-center">
+            <CalendarDays size={15} className="text-[#7C6FF7]" />
           </div>
-          <h3 className="font-semibold text-sm">Events</h3>
+          <h3 className="text-sm font-medium text-[#1A1A2E]">Events</h3>
         </div>
-        <span className="text-xs px-2 py-1 rounded-full bg-pink-500/10 text-pink-400 font-medium">Upcoming</span>
+        <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#E8E6FF] text-[#7C6FF7] font-medium">Upcoming</span>
       </div>
       <div className="space-y-2.5">
         {events.map(event => (
-          <div key={event.id} className="py-2 border-b border-white/[0.04] last:border-0">
+          <div key={event.id} className="py-2 border-b border-[#E4E2F0] last:border-0">
             <div className="flex items-start justify-between gap-2">
-              <p className="text-xs font-medium text-white/90 leading-snug line-clamp-1">{event.name}</p>
-              <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium flex-shrink-0 ${categoryColors[event.category] || 'bg-white/10 text-white/60'}`}>
+              <p className="text-xs font-medium text-[#1A1A2E] leading-snug line-clamp-1">{event.name}</p>
+              <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium flex-shrink-0 ${categoryColors[event.category] || 'bg-[#E8E6FF] text-[#7C6FF7]'}`}>
                 {event.category}
               </span>
             </div>
-            <p className="text-[10px] text-white/40 mt-1">
+            <p className="text-[10px] text-[#6B6B8A] mt-1">
               📅 {event.date} · ⏰ {event.time} · 📍 {event.venue.split('—')[0].trim()}
             </p>
           </div>

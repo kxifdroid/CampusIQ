@@ -19,7 +19,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
             <Sidebar mobile onClose={() => setMobileSidebarOpen(false)} />
           </div>
           <div
-            className="flex-1 bg-black/60 backdrop-blur-sm"
+            className="flex-1 bg-[#1A1A2E]/40"
             onClick={() => setMobileSidebarOpen(false)}
           />
         </div>

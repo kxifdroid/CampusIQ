@@ -51,12 +51,12 @@ export default function CafeteriaPage() {
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-[#06B6D4]/20 flex items-center justify-center">
-          <UtensilsCrossed size={20} className="text-[#06B6D4]" />
+        <div className="w-10 h-10 rounded-xl bg-[#E8E6FF] flex items-center justify-center">
+          <UtensilsCrossed size={20} className="text-[#7C6FF7]" />
         </div>
         <div>
-          <h1 className="text-xl font-bold">Cafeteria</h1>
-          <p className="text-xs text-white/40">Campus Dining — Weekly Menu</p>
+          <h1 className="text-xl font-semibold text-[#1A1A2E]">Cafeteria</h1>
+          <p className="text-xs text-[#6B6B8A]">Campus Dining — Weekly Menu</p>
         </div>
       </div>
 
@@ -65,8 +65,8 @@ export default function CafeteriaPage() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {Object.entries(timings.meals).map(([meal, time]) => (
             <div key={meal} className="glass-card p-3 text-center">
-              <p className="text-[10px] text-white/40 capitalize mb-1">{meal}</p>
-              <p className="text-xs font-semibold text-white/80">{time}</p>
+              <p className="text-[10px] text-[#6B6B8A] capitalize mb-1">{meal}</p>
+              <p className="text-xs font-semibold text-[#1A1A2E]">{time}</p>
             </div>
           ))}
         </div>
@@ -80,10 +80,10 @@ export default function CafeteriaPage() {
               <button
                 key={day}
                 onClick={() => setSelectedDay(day)}
-                className={`flex-shrink-0 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                className={`flex-shrink-0 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                   selectedDay === day
-                    ? 'bg-[#06B6D4] text-[#0D0D12]'
-                    : 'bg-white/[0.04] text-white/50 hover:bg-white/[0.08] hover:text-white'
+                    ? 'bg-[#7C6FF7] text-white'
+                    : 'bg-white border border-[#E4E2F0] text-[#6B6B8A] hover:bg-[#F0EEFF] hover:text-[#7C6FF7]'
                 }`}
               >
                 {DAY_LABELS[day].slice(0, 3)}
@@ -100,16 +100,16 @@ export default function CafeteriaPage() {
                 if (!items || items.length === 0) return null;
                 return (
                   <div key={meal} className="glass-card p-4">
-                    <h3 className="font-semibold text-sm capitalize mb-3 text-[#06B6D4]">{meal}</h3>
+                    <h3 className="font-semibold text-sm capitalize mb-3 text-[#7C6FF7]">{meal}</h3>
                     <div className="space-y-2">
                       {items.map((item, i) => (
-                        <div key={i} className="flex items-center justify-between py-1.5 border-b border-white/[0.04] last:border-0">
+                        <div key={i} className="flex items-center justify-between py-1.5 border-b border-[#E4E2F0] last:border-0">
                           <div className="flex items-center gap-2.5">
                             <span className={item.veg ? 'badge-veg' : 'badge-nonveg'} />
-                            <span className="text-sm text-white/85">{item.item}</span>
-                            <span className="text-[11px] text-white/30">{item.calories} kcal</span>
+                            <span className="text-sm text-[#1A1A2E] font-medium">{item.item}</span>
+                            <span className="text-[11px] text-[#6B6B8A]">{item.calories} kcal</span>
                           </div>
-                          <span className="text-sm font-semibold text-emerald-400">₹{item.price}</span>
+                          <span className="text-sm font-semibold text-[#6BCB8B]">₹{item.price}</span>
                         </div>
                       ))}
                     </div>
@@ -118,7 +118,7 @@ export default function CafeteriaPage() {
               })}
             </div>
           ) : (
-            <p className="text-white/40 text-sm">Menu not available for {DAY_LABELS[selectedDay]}</p>
+            <p className="text-[#6B6B8A] text-sm">Menu not available for {DAY_LABELS[selectedDay]}</p>
           )}
         </div>
 
@@ -126,16 +126,16 @@ export default function CafeteriaPage() {
           {/* Specials */}
           {specials.length > 0 && (
             <div className="glass-card p-4">
-              <h3 className="font-semibold text-sm mb-3 text-amber-400">⭐ Weekly Specials</h3>
+              <h3 className="font-semibold text-sm mb-3 text-[#7C6FF7]">⭐ Weekly Specials</h3>
               <div className="space-y-3">
                 {specials.map((s, i) => (
-                  <div key={i} className="py-2 border-b border-white/[0.04] last:border-0">
+                  <div key={i} className="py-2 border-b border-[#E4E2F0] last:border-0">
                     <div className="flex items-center gap-2 mb-1">
                       <span className={s.veg ? 'badge-veg' : 'badge-nonveg'} />
-                      <p className="text-xs font-medium">{s.name}</p>
-                      {s.price && <span className="ml-auto text-xs text-emerald-400">₹{s.price}</span>}
+                      <p className="text-xs font-medium text-[#1A1A2E]">{s.name}</p>
+                      {s.price && <span className="ml-auto text-xs text-[#6BCB8B]">₹{s.price}</span>}
                     </div>
-                    <p className="text-[11px] text-white/40 leading-snug">{s.description}</p>
+                    <p className="text-[11px] text-[#6B6B8A] leading-snug">{s.description}</p>
                   </div>
                 ))}
               </div>

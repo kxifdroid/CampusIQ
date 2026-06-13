@@ -140,14 +140,14 @@ export default function ChatPanel({ prefilterTool, compact }: ChatPanelProps) {
   };
 
   return (
-    <div className={`glass-card flex flex-col ${compact ? 'h-[500px]' : 'h-[520px]'}`}>
+    <div className={`bg-white border border-[#E4E2F0] rounded-xl flex flex-col shadow-none ${compact ? 'h-[500px]' : 'h-[520px]'}`}>
       {/* Header */}
-      <div className="flex items-center gap-2 px-5 py-4 border-b border-white/[0.06]">
-        <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#7C3AED] to-[#06B6D4] flex items-center justify-center">
+      <div className="flex items-center gap-2 px-5 py-4 border-b border-[#E4E2F0]">
+        <div className="w-7 h-7 rounded-lg bg-[#7C6FF7] flex items-center justify-center">
           <Sparkles size={13} className="text-white" />
         </div>
-        <h3 className="font-semibold text-sm">Campus AI Assistant</h3>
-        <span className="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+        <h3 className="font-semibold text-sm text-[#1A1A2E]">Campus AI Assistant</h3>
+        <span className="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-[#E8E6FF] text-[#7C6FF7] border border-[#E4E2F0]">
           Gemini Powered
         </span>
       </div>
@@ -157,18 +157,18 @@ export default function ChatPanel({ prefilterTool, compact }: ChatPanelProps) {
         {messages.length === 0 && (
           <div className="flex flex-col items-center justify-center h-full gap-6 pb-4">
             <div>
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#7C3AED]/20 to-[#06B6D4]/20 border border-white/[0.08] flex items-center justify-center mx-auto mb-3">
-                <Sparkles size={20} className="text-[#7C3AED]" />
+              <div className="w-12 h-12 rounded-full bg-[#E8E6FF] border border-[#E4E2F0] flex items-center justify-center mx-auto mb-3">
+                <Sparkles size={20} className="text-[#7C6FF7]" />
               </div>
-              <p className="text-center text-sm text-white/60">Ask me anything about campus</p>
-              <p className="text-center text-xs text-white/30 mt-1">Library · Cafeteria · Events · Academics</p>
+              <p className="text-center text-sm text-[#6B6B8A]">Ask me anything about campus</p>
+              <p className="text-center text-xs text-[#6B6B8A]/70 mt-1">Library · Cafeteria · Events · Academics</p>
             </div>
             <div className="grid grid-cols-2 gap-2 w-full max-w-sm">
               {SUGGESTED_PROMPTS.slice(0, compact ? 4 : 6).map((prompt, i) => (
                 <button
                   key={i}
                   onClick={() => sendMessage(prompt)}
-                  className="text-left text-xs px-3 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.06] text-white/60 hover:text-white hover:bg-white/[0.08] hover:border-[#7C3AED]/30 transition-all duration-200 line-clamp-2"
+                  className="text-left text-xs px-3 py-2.5 rounded-xl bg-white border border-[#E4E2F0] text-[#6B6B8A] hover:text-[#7C6FF7] hover:bg-[#F0EEFF] hover:border-[#7C6FF7]/30 transition-all duration-200 line-clamp-2"
                 >
                   {prompt}
                 </button>
@@ -196,8 +196,8 @@ export default function ChatPanel({ prefilterTool, compact }: ChatPanelProps) {
       </div>
 
       {/* Input */}
-      <div className="px-4 py-3 border-t border-white/[0.06]">
-        <div className="flex items-end gap-2 bg-white/[0.04] border border-white/[0.08] rounded-2xl px-4 py-2.5 focus-within:border-[#7C3AED]/50 transition-colors">
+      <div className="px-4 py-3 border-t border-[#E4E2F0]">
+        <div className="flex items-end gap-2 bg-white border border-[#E4E2F0] rounded-xl px-4 py-2.5 focus-within:border-[#7C6FF7] transition-colors">
           <textarea
             ref={inputRef}
             value={input}
@@ -205,18 +205,18 @@ export default function ChatPanel({ prefilterTool, compact }: ChatPanelProps) {
             onKeyDown={handleKeyDown}
             placeholder="Ask about library, food, events, academics..."
             rows={1}
-            className="flex-1 bg-transparent text-sm text-white placeholder-white/30 resize-none outline-none max-h-24 leading-relaxed"
+            className="flex-1 bg-transparent text-sm text-[#1A1A2E] placeholder-[#6B6B8A] resize-none outline-none max-h-24 leading-relaxed"
             style={{ height: 'auto' }}
           />
           <button
             onClick={() => sendMessage()}
             disabled={!input.trim() || isLoading}
-            className="w-8 h-8 rounded-xl bg-[#7C3AED] flex items-center justify-center flex-shrink-0 hover:bg-[#6D28D9] disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 hover:scale-105 active:scale-95"
+            className="w-8 h-8 rounded-lg bg-[#7C6FF7] flex items-center justify-center flex-shrink-0 hover:bg-[#6A5EE0] disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
           >
             <Send size={14} className="text-white" />
           </button>
         </div>
-        <p className="text-[10px] text-white/20 text-center mt-1.5">Enter to send · Shift+Enter for new line</p>
+        <p className="text-[10px] text-[#6B6B8A]/60 text-center mt-1.5">Enter to send · Shift+Enter for new line</p>
       </div>
     </div>
   );

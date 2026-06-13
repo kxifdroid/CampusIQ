@@ -30,25 +30,25 @@ export default function Sidebar({ mobile, onClose }: SidebarProps) {
 
   return (
     <aside
-      className={`flex flex-col h-full bg-[#16161E] border-r border-white/[0.06] ${
+      className={`flex flex-col h-full bg-white border-r border-[#E4E2F0] ${
         mobile ? 'w-full' : 'w-60'
       }`}
     >
       {/* Logo */}
-      <div className="flex items-center justify-between px-5 py-5 border-b border-white/[0.06]">
+      <div className="flex items-center justify-between px-5 py-5 border-b border-[#E4E2F0]">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#7C3AED] to-[#06B6D4] flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-[#7C6FF7] flex items-center justify-center">
             <Brain size={16} className="text-white" />
           </div>
           <span className="text-base font-bold gradient-text">CampusIQ</span>
         </div>
         {mobile && onClose && (
-          <button onClick={onClose} className="text-white/40 hover:text-white transition-colors">
+          <button onClick={onClose} className="text-[#6B6B8A] hover:text-[#7C6FF7] transition-colors">
             <X size={20} />
           </button>
         )}
       </div>
-
+ 
       {/* Nav */}
       <nav className="flex-1 px-3 py-4 space-y-1">
         {navItems.map(({ href, label, icon: Icon }) => {
@@ -66,11 +66,11 @@ export default function Sidebar({ mobile, onClose }: SidebarProps) {
           );
         })}
       </nav>
-
+ 
       {/* Footer */}
-      <div className="px-5 py-4 border-t border-white/[0.06]">
-        <p className="text-[11px] text-white/30">IIT Roorkee Campus Intelligence</p>
-        <p className="text-[11px] text-white/20 mt-0.5">Powered by Google Gemini + MCP</p>
+      <div className="px-5 py-4 border-t border-[#E4E2F0]">
+        <p className="text-[11px] text-[#6B6B8A]">IIT Roorkee Campus Intelligence</p>
+        <p className="text-[11px] text-[#6B6B8A]/70 mt-0.5">Powered by Google Gemini + MCP</p>
       </div>
     </aside>
   );

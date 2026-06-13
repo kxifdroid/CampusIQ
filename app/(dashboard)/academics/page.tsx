@@ -55,12 +55,12 @@ export default function AcademicsPage() {
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center">
-          <GraduationCap size={20} className="text-amber-400" />
+        <div className="w-10 h-10 rounded-xl bg-[#E8E6FF] flex items-center justify-center">
+          <GraduationCap size={20} className="text-[#7C6FF7]" />
         </div>
         <div>
-          <h1 className="text-xl font-bold">Academics</h1>
-          <p className="text-xs text-white/40">Schedule, deadlines, holidays & notices</p>
+          <h1 className="text-xl font-semibold text-[#1A1A2E]">Academics</h1>
+          <p className="text-xs text-[#6B6B8A]">Schedule, deadlines, holidays & notices</p>
         </div>
       </div>
 
@@ -69,10 +69,10 @@ export default function AcademicsPage() {
           <button
             key={id}
             onClick={() => setActiveTab(id)}
-            className={`flex-shrink-0 px-4 py-1.5 rounded-xl text-xs font-medium transition-all ${
+            className={`flex-shrink-0 px-4 py-1.5 rounded-lg text-xs font-medium transition-all ${
               activeTab === id
-                ? 'bg-[#7C3AED] text-white'
-                : 'bg-white/[0.04] text-white/50 hover:bg-white/[0.08] hover:text-white'
+                ? 'bg-[#7C6FF7] text-white'
+                : 'bg-white border border-[#E4E2F0] text-[#6B6B8A] hover:bg-[#F0EEFF] hover:text-[#7C6FF7]'
             }`}
           >
             {label}
@@ -93,13 +93,13 @@ export default function AcademicsPage() {
                     const urgent = label.includes('Today') || label.includes('Tomorrow');
                     return (
                       <div key={i} className="glass-card p-4 flex items-center gap-4">
-                        <div className={`w-1.5 h-16 rounded-full flex-shrink-0 ${urgent ? 'bg-red-500' : 'bg-amber-500'}`} />
+                        <div className={`w-1.5 h-16 rounded-full flex-shrink-0 ${urgent ? 'bg-[#F28B82]' : 'bg-[#F5C97A]'}`} />
                         <div className="flex-1 min-w-0">
-                          <p className="font-medium text-sm">{d.title}</p>
-                          <p className="text-xs text-white/40 mt-0.5">{d.course} · {d.marks} marks · {d.submissionMode}</p>
-                          <p className="text-[11px] text-white/30 mt-1">📅 {d.dueDate}</p>
+                          <p className="font-medium text-sm text-[#1A1A2E]">{d.title}</p>
+                          <p className="text-xs text-[#6B6B8A] mt-0.5">{d.course} · {d.marks} marks · {d.submissionMode}</p>
+                          <p className="text-[11px] text-[#6B6B8A]/80 mt-1">📅 {d.dueDate}</p>
                         </div>
-                        <span className={`text-[11px] px-2.5 py-1 rounded-full font-semibold flex-shrink-0 ${urgent ? 'bg-red-500/15 text-red-400' : 'bg-amber-500/10 text-amber-400'}`}>
+                        <span className={`text-[11px] px-2.5 py-1 rounded-full font-semibold flex-shrink-0 ${urgent ? 'bg-[#F28B82]/15 text-[#F28B82]' : 'bg-[#F5C97A]/15 text-[#F5C97A]'}`}>
                           {label}
                         </span>
                       </div>
@@ -112,16 +112,16 @@ export default function AcademicsPage() {
                 <div className="space-y-4">
                   {DAYS.filter(d => schedule[d]?.length > 0).map(day => (
                     <div key={day} className="glass-card p-4">
-                      <h3 className="font-semibold text-sm capitalize mb-3 text-[#7C3AED]">{day}</h3>
+                      <h3 className="font-semibold text-sm capitalize mb-3 text-[#7C6FF7]">{day}</h3>
                       <div className="space-y-2">
                         {schedule[day].map((cls, i) => (
-                          <div key={i} className="flex items-center gap-3 py-1.5 border-b border-white/[0.04] last:border-0">
-                            <span className="text-[11px] font-mono text-[#06B6D4] w-24 flex-shrink-0">{cls.time}</span>
+                          <div key={i} className="flex items-center gap-3 py-1.5 border-b border-[#E4E2F0] last:border-0">
+                            <span className="text-[11px] font-mono text-[#7C6FF7] w-24 flex-shrink-0">{cls.time}</span>
                             <div className="flex-1 min-w-0">
-                              <p className="text-xs font-medium truncate">{cls.course}</p>
-                              <p className="text-[10px] text-white/40">{cls.code} · {cls.room}</p>
+                              <p className="text-xs font-medium text-[#1A1A2E] truncate">{cls.course}</p>
+                              <p className="text-[10px] text-[#6B6B8A]">{cls.code} · {cls.room}</p>
                             </div>
-                            <p className="text-[10px] text-white/40 text-right hidden sm:block">{cls.professor.split(' ').slice(0, 2).join(' ')}</p>
+                            <p className="text-[10px] text-[#6B6B8A] text-right hidden sm:block">{cls.professor.split(' ').slice(0, 2).join(' ')}</p>
                           </div>
                         ))}
                       </div>
@@ -138,10 +138,10 @@ export default function AcademicsPage() {
                         {h.type === 'national' ? '🇮🇳' : h.type === 'festival' ? '🎉' : h.type === 'exam' ? '📝' : '🏖️'}
                       </span>
                       <div className="flex-1">
-                        <p className="font-medium text-sm">{h.name}</p>
-                        {h.duration && <p className="text-[10px] text-white/40">Duration: {h.duration}</p>}
+                        <p className="font-medium text-sm text-[#1A1A2E]">{h.name}</p>
+                        {h.duration && <p className="text-[10px] text-[#6B6B8A]">Duration: {h.duration}</p>}
                       </div>
-                      <span className="text-xs text-white/50 flex-shrink-0">{h.date}</span>
+                      <span className="text-xs text-[#6B6B8A] flex-shrink-0">{h.date}</span>
                     </div>
                   ))}
                 </div>
@@ -150,16 +150,16 @@ export default function AcademicsPage() {
               {activeTab === 'notices' && (
                 <div className="space-y-3">
                   {notices.map(n => (
-                    <div key={n.id} className={`glass-card p-4 border ${n.important ? 'border-red-500/20' : 'border-white/[0.06]'}`}>
+                    <div key={n.id} className={`glass-card p-4 border ${n.important ? 'border-[#F28B82]/30' : 'border-[#E4E2F0]'}`}>
                       <div className="flex items-start gap-2 mb-2">
-                        {n.important && <AlertCircle size={14} className="text-red-400 flex-shrink-0 mt-0.5" />}
-                        <p className="font-semibold text-sm">{n.title}</p>
+                        {n.important && <AlertCircle size={14} className="text-[#F28B82] flex-shrink-0 mt-0.5" />}
+                        <p className="font-semibold text-sm text-[#1A1A2E]">{n.title}</p>
                       </div>
-                      <p className="text-xs text-white/60 leading-relaxed">{n.content}</p>
+                      <p className="text-xs text-[#6B6B8A] leading-relaxed">{n.content}</p>
                       <div className="flex items-center gap-2 mt-2">
-                        <span className="text-[10px] text-white/30">{n.department}</span>
-                        <span className="text-white/20">·</span>
-                        <span className="text-[10px] text-white/30">{n.date}</span>
+                        <span className="text-[10px] text-[#6B6B8A]/80">{n.department}</span>
+                        <span className="text-[#6B6B8A]/40">·</span>
+                        <span className="text-[10px] text-[#6B6B8A]/80">{n.date}</span>
                       </div>
                     </div>
                   ))}

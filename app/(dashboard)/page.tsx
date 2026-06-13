@@ -13,10 +13,10 @@ export default async function DashboardPage() {
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">
-          Good {getGreeting()}, <span className="gradient-text">{firstName}</span>
+        <h1 className="text-xl font-semibold text-[#1A1A2E]">
+          Good {getGreeting()}, <span className="text-[#7C6FF7]">{firstName}</span>
         </h1>
-        <p className="text-sm text-white/40 mt-1">Here&apos;s what&apos;s happening on campus today.</p>
+        <p className="text-sm text-[#6B6B8A] mt-1">Here&apos;s what&apos;s happening on campus today.</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">

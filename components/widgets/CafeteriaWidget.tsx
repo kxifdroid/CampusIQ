@@ -55,32 +55,32 @@ export default function CafeteriaWidget() {
     <div className="glass-card p-5">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-[#06B6D4]/20 flex items-center justify-center">
-            <UtensilsCrossed size={15} className="text-[#06B6D4]" />
+          <div className="w-8 h-8 rounded-lg bg-[#E8E6FF] flex items-center justify-center">
+            <UtensilsCrossed size={15} className="text-[#7C6FF7]" />
           </div>
-          <h3 className="font-semibold text-sm">Cafeteria</h3>
+          <h3 className="text-sm font-medium text-[#1A1A2E]">Cafeteria</h3>
         </div>
-        <span className="text-xs px-2 py-1 rounded-full bg-amber-500/10 text-amber-400 font-medium">Today's Lunch</span>
+        <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#E8E6FF] text-[#7C6FF7] font-medium">Today's Lunch</span>
       </div>
 
       {lunchItems.length > 0 ? (
         <div className="space-y-2">
           {lunchItems.map((item, i) => (
-            <div key={i} className="flex items-center justify-between py-1.5 border-b border-white/[0.04] last:border-0">
+            <div key={i} className="flex items-center justify-between py-1.5 border-b border-[#E4E2F0] last:border-0">
               <div className="flex items-center gap-2 min-w-0">
                 <span className={item.veg ? 'badge-veg' : 'badge-nonveg'} />
-                <span className="text-xs font-medium text-white/85 truncate">{item.item}</span>
+                <span className="text-xs font-medium text-[#1A1A2E] truncate">{item.item}</span>
               </div>
               <div className="flex items-center gap-2 ml-2 flex-shrink-0">
-                <span className="text-[10px] text-white/35">{item.calories} kcal</span>
-                <span className="text-xs text-emerald-400 font-semibold">₹{item.price}</span>
+                <span className="text-[10px] text-[#6B6B8A]">{item.calories} kcal</span>
+                <span className="text-xs text-[#6BCB8B] font-semibold">₹{item.price}</span>
               </div>
             </div>
           ))}
-          <p className="text-[10px] text-white/30 mt-2">Lunch: 12:00 PM – 2:30 PM</p>
+          <p className="text-[10px] text-[#6B6B8A] mt-2">Lunch: 12:00 PM – 2:30 PM</p>
         </div>
       ) : (
-        <p className="text-sm text-white/40">Menu not available</p>
+        <p className="text-sm text-[#6B6B8A]">Menu not available</p>
       )}
     </div>
   );

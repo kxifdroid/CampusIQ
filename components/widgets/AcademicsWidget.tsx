@@ -65,25 +65,25 @@ export default function AcademicsWidget() {
     <div className="glass-card p-5">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center">
-            <GraduationCap size={15} className="text-amber-400" />
+          <div className="w-8 h-8 rounded-lg bg-[#E8E6FF] flex items-center justify-center">
+            <GraduationCap size={15} className="text-[#7C6FF7]" />
           </div>
-          <h3 className="font-semibold text-sm">Academics</h3>
+          <h3 className="text-sm font-medium text-[#1A1A2E]">Academics</h3>
         </div>
       </div>
 
       <div className="space-y-2 mb-3">
-        <p className="text-[10px] text-white/40 uppercase tracking-wider">Upcoming Deadlines</p>
+        <p className="text-[10px] text-[#6B6B8A] uppercase tracking-wider">Upcoming Deadlines</p>
         {deadlines.map((d, i) => (
-          <div key={i} className="flex items-start justify-between gap-2 py-1.5 border-b border-white/[0.04] last:border-0">
+          <div key={i} className="flex items-start justify-between gap-2 py-1.5 border-b border-[#E4E2F0] last:border-0">
             <div className="min-w-0">
-              <p className="text-xs font-medium text-white/90 line-clamp-1">{d.title}</p>
-              <p className="text-[10px] text-white/40">{d.course} · {d.marks} marks</p>
+              <p className="text-xs font-medium text-[#1A1A2E] line-clamp-1">{d.title}</p>
+              <p className="text-[10px] text-[#6B6B8A]">{d.course} · {d.marks} marks</p>
             </div>
             <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold flex-shrink-0 ${
               getDaysUntil(d.dueDate) === 'Today' || getDaysUntil(d.dueDate) === 'Tomorrow'
-                ? 'bg-red-500/15 text-red-400'
-                : 'bg-amber-500/10 text-amber-400'
+                ? 'bg-[#F28B82]/15 text-[#F28B82]'
+                : 'bg-[#F5C97A]/15 text-[#F5C97A]'
             }`}>
               {getDaysUntil(d.dueDate)}
             </span>
@@ -93,11 +93,11 @@ export default function AcademicsWidget() {
 
       {notices.length > 0 && (
         <div>
-          <p className="text-[10px] text-white/40 uppercase tracking-wider mb-2">Important Notices</p>
+          <p className="text-[10px] text-[#6B6B8A] uppercase tracking-wider mb-2">Important Notices</p>
           {notices.slice(0, 1).map(n => (
             <div key={n.id} className="flex items-center gap-2 py-1.5">
-              <AlertCircle size={12} className="text-red-400 flex-shrink-0" />
-              <p className="text-[11px] text-white/70 line-clamp-2">{n.title}</p>
+              <AlertCircle size={12} className="text-[#F28B82] flex-shrink-0" />
+              <p className="text-[11px] text-[#1A1A2E] line-clamp-2">{n.title}</p>
             </div>
           ))}
         </div>

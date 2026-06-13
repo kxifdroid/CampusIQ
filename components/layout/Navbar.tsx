@@ -37,17 +37,17 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
   }, [showProfile]);
 
   return (
-    <header className="h-16 flex items-center gap-4 px-6 border-b border-white/[0.06] bg-[#16161E]/80 backdrop-blur-sm sticky top-0 z-30">
+    <header className="h-16 flex items-center gap-4 px-6 border-b border-[#E4E2F0] bg-white sticky top-0 z-30">
       <button
         onClick={onMenuClick}
-        className="lg:hidden text-white/50 hover:text-white transition-colors"
+        className="lg:hidden text-[#6B6B8A] hover:text-[#7C6FF7] transition-colors"
         aria-label="Open navigation"
       >
         <Menu size={22} />
       </button>
 
       <div className="flex items-center gap-2 lg:hidden">
-        <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#7C3AED] to-[#06B6D4] flex items-center justify-center">
+        <div className="w-7 h-7 rounded-lg bg-[#7C6FF7] flex items-center justify-center">
           <Brain size={13} className="text-white" />
         </div>
         <span className="font-bold gradient-text text-sm">CampusIQ</span>
@@ -60,48 +60,47 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
       >
         <Search
           size={15}
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none"
+          className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6B6B8A] pointer-events-none"
         />
         <input
           type="text"
           placeholder="Search campus resources..."
           onFocus={() => setSearchFocused(true)}
           onBlur={() => setSearchFocused(false)}
-          className="w-full pl-9 pr-4 py-2 bg-white/[0.05] border border-white/[0.08] rounded-xl text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#7C3AED]/60 focus:bg-white/[0.07] transition-all duration-300"
+          className="w-full pl-9 pr-4 py-2 bg-white border border-[#E4E2F0] rounded-lg text-sm placeholder:text-[#6B6B8A] focus:border-[#7C6FF7] focus:ring-1 focus:ring-[#7C6FF7] outline-none transition-all duration-300 text-[#1A1A2E]"
         />
       </div>
 
       <div className="flex-1" />
 
-
       <div className="hidden sm:block text-right">
-        <p className="text-xs font-semibold text-white/75">{userName}</p>
-        <p className="text-[10px] text-white/30">Signed in</p>
+        <p className="text-xs font-semibold text-[#1A1A2E]">{userName}</p>
+        <p className="text-[10px] text-[#6B6B8A]">Signed in</p>
       </div>
 
       <button
         onClick={() => setShowProfile(true)}
         aria-label="Edit profile"
-        className="w-8 h-8 rounded-full bg-gradient-to-br from-[#7C3AED] to-[#06B6D4] flex items-center justify-center flex-shrink-0"
+        className="w-8 h-8 rounded-full bg-[#E8E6FF] text-[#7C6FF7] hover:bg-[#DDD9FF] flex items-center justify-center flex-shrink-0 transition-colors"
       >
-        <span className="text-xs font-bold">{initials}</span>
+        <span className="text-xs font-semibold">{initials}</span>
       </button>
 
       {showProfile && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/60" onClick={() => setShowProfile(false)} />
-          <div className="relative w-full max-w-md bg-[#0D0D12] rounded p-6 shadow-lg">
-            <h2 className="text-lg font-bold mb-3">Edit profile</h2>
-            <label className="block text-sm mb-1">Name</label>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-[#1A1A2E]/40 backdrop-blur-none" onClick={() => setShowProfile(false)} />
+          <div className="relative w-full max-w-md bg-white border border-[#E4E2F0] rounded-xl p-6 shadow-sm">
+            <h2 className="text-sm font-semibold text-[#1A1A2E] mb-4">Edit profile</h2>
+            <label className="block text-xs font-medium text-[#6B6B8A] mb-1">Name</label>
             <input
               value={profileName}
               onChange={(e) => setProfileName(e.target.value)}
-              className="w-full px-3 py-2 mb-4 rounded border bg-white/[0.03]"
+              className="w-full px-3 py-2 mb-4 bg-white border border-[#E4E2F0] rounded-lg text-sm placeholder:text-[#6B6B8A] focus:border-[#7C6FF7] focus:ring-1 focus:ring-[#7C6FF7] outline-none text-[#1A1A2E]"
             />
             <div className="flex gap-3 justify-end">
               <button
                 onClick={() => setShowProfile(false)}
-                className="px-3 py-2 rounded bg-white/5"
+                className="bg-[#E8E6FF] text-[#7C6FF7] rounded-lg px-4 py-2 text-sm font-medium hover:bg-[#DDD9FF] transition-colors"
               >
                 Cancel
               </button>
@@ -109,17 +108,15 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
                 onClick={async () => {
                   setLoadingProfile(true);
                   try {
-                    const res = await fetch("/api/user/profile", {
+                     const res = await fetch("/api/user/profile", {
                       method: "PUT",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({ name: profileName }),
                     });
                     if (!res.ok) throw new Error("Update failed");
                     setShowProfile(false);
-                    // optionally refresh
                     router.refresh();
                   } catch (e) {
-                    // eslint-disable-next-line no-console
                     console.error(e);
                     alert("Failed to update profile");
                   } finally {
@@ -127,7 +124,7 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
                   }
                 }}
                 disabled={loadingProfile}
-                className="px-3 py-2 rounded bg-gradient-to-r from-[#7C3AED] to-[#06B6D4] text-white"
+                className="bg-[#7C6FF7] text-white rounded-lg px-4 py-2 text-sm font-medium hover:bg-[#6A5EE0] transition-colors disabled:opacity-50"
               >
                 {loadingProfile ? "Saving..." : "Save"}
               </button>
@@ -138,10 +135,10 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
 
       <button
         onClick={() => signOut({ callbackUrl: "/auth/signin" })}
-        className="p-2 rounded-xl bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.08] transition-all duration-200"
+        className="p-2 rounded-lg text-[#6B6B8A] hover:bg-[#F0EEFF] border border-[#E4E2F0] transition-colors"
         aria-label="Sign out"
       >
-        <LogOut size={16} className="text-white/60" />
+        <LogOut size={16} />
       </button>
     </header>
   );
