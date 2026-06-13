@@ -1,4 +1,5 @@
 # CampusIQ 🎓
+Check the deployed version: [CampusIq](https://campus-iq-self.vercel.app/)
 
 > Unified Campus Intelligence Dashboard powered by Google Gemini API + MCP (Model Context Protocol)
 
