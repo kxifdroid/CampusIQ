@@ -14,6 +14,9 @@ function createPrismaClient() {
       throw new Error("DATABASE_URL environment variable is not set");
     }
 
+    const maskedUrl = databaseUrl.replace(/:[^:@]+@/, ":****@");
+    console.log(`[Prisma] Initializing with URL: ${maskedUrl}`);
+
     if (!globalForPrisma.pgPool) {
       globalForPrisma.pgPool = new pg.Pool({
         connectionString: databaseUrl,
