@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { UtensilsCrossed } from 'lucide-react';
 import ChatPanel from '@/components/chat/ChatPanel';
+import { ButtonComponent } from '@syncfusion/ej2-react-buttons';
+import { TabComponent, TabItemsDirective, TabItemDirective } from '@syncfusion/ej2-react-navigations';
 
 interface MenuItem { item: string; veg: boolean; price: number; calories: number; }
 type DayMenu = { breakfast: MenuItem[]; lunch: MenuItem[]; snacks: MenuItem[]; dinner: MenuItem[] };
@@ -56,7 +58,7 @@ export default function CafeteriaPage() {
         </div>
         <div>
           <h1 className="text-xl font-semibold text-[#1A1A2E]">Cafeteria</h1>
-          <p className="text-xs text-[#6B6B8A]">Campus Dining — Weekly Menu</p>
+          <p className="text-xs text-slate-500 dark:text-[#6B6B8A]">Campus Dining — Weekly Menu</p>
         </div>
       </div>
 
@@ -64,9 +66,9 @@ export default function CafeteriaPage() {
       {timings?.meals && (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {Object.entries(timings.meals).map(([meal, time]) => (
-            <div key={meal} className="glass-card p-3 text-center">
-              <p className="text-[10px] text-[#6B6B8A] capitalize mb-1">{meal}</p>
-              <p className="text-xs font-semibold text-[#1A1A2E]">{time}</p>
+            <div key={meal} className="glass-card p-3 text-center bg-white dark:bg-[#16161E]">
+              <p className="text-[10px] text-slate-500 dark:text-[#6B6B8A] capitalize mb-1">{meal}</p>
+              <p className="text-xs font-semibold text-slate-800 dark:text-[#1A1A2E]">{time}</p>
             </div>
           ))}
         </div>
@@ -77,65 +79,75 @@ export default function CafeteriaPage() {
           {/* Day picker */}
           <div className="flex gap-2 overflow-x-auto pb-1">
             {DAYS.map(day => (
-              <button
+              <ButtonComponent
                 key={day}
                 onClick={() => setSelectedDay(day)}
-                className={`flex-shrink-0 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                cssClass={`flex-shrink-0 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                   selectedDay === day
-                    ? 'bg-[#7C6FF7] text-white'
-                    : 'bg-white border border-[#E4E2F0] text-[#6B6B8A] hover:bg-[#F0EEFF] hover:text-[#7C6FF7]'
+                    ? 'e-primary bg-[#7C6FF7] text-white'
+                    : 'e-outline bg-white dark:bg-[#16161E] text-slate-600 dark:text-[#6B6B8A]'
                 }`}
               >
                 {DAY_LABELS[day].slice(0, 3)}
-              </button>
+              </ButtonComponent>
             ))}
           </div>
 
           {loading ? (
             <div className="space-y-4">{[1,2,3,4].map(i => <div key={i} className="skeleton h-24 rounded-xl" />)}</div>
           ) : currentMenu ? (
-            <div className="space-y-4">
-              {MEAL_ORDER.map(meal => {
-                const items = currentMenu[meal as keyof DayMenu];
-                if (!items || items.length === 0) return null;
-                return (
-                  <div key={meal} className="glass-card p-4">
-                    <h3 className="font-semibold text-sm capitalize mb-3 text-[#7C6FF7]">{meal}</h3>
-                    <div className="space-y-2">
-                      {items.map((item, i) => (
-                        <div key={i} className="flex items-center justify-between py-1.5 border-b border-[#E4E2F0] last:border-0">
-                          <div className="flex items-center gap-2.5">
-                            <span className={item.veg ? 'badge-veg' : 'badge-nonveg'} />
-                            <span className="text-sm text-[#1A1A2E] font-medium">{item.item}</span>
-                            <span className="text-[11px] text-[#6B6B8A]">{item.calories} kcal</span>
+            <div className="bg-white dark:bg-[#16161E] rounded-xl border border-[#E4E2F0] dark:border-white/[0.08] overflow-hidden p-1">
+              <TabComponent id="mealsTab" animation={{ next: { effect: 'FadeIn' }, previous: { effect: 'FadeIn' } }}>
+                <TabItemsDirective>
+                  {MEAL_ORDER.map(meal => {
+                    const items = currentMenu[meal as keyof DayMenu] || [];
+                    return (
+                      <TabItemDirective
+                        key={meal}
+                        header={{ text: meal.charAt(0).toUpperCase() + meal.slice(1) }}
+                        content={() => (
+                          <div className="p-4 space-y-2">
+                            {items.length > 0 ? (
+                              items.map((item, i) => (
+                                <div key={i} className="flex items-center justify-between py-2.5 border-b border-[#E4E2F0] dark:border-white/[0.08] last:border-0">
+                                  <div className="flex items-center gap-2.5">
+                                    <span className={item.veg ? 'badge-veg' : 'badge-nonveg'} />
+                                    <span className="text-sm text-slate-800 dark:text-white font-medium">{item.item}</span>
+                                    <span className="text-[11px] text-slate-500 dark:text-white/60">{item.calories} kcal</span>
+                                  </div>
+                                  <span className="text-sm font-semibold text-[#6BCB8B]">₹{item.price}</span>
+                                </div>
+                              ))
+                            ) : (
+                              <p className="text-sm text-slate-500 dark:text-white/40 py-6 text-center">No menu items scheduled for this meal.</p>
+                            )}
                           </div>
-                          <span className="text-sm font-semibold text-[#6BCB8B]">₹{item.price}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                );
-              })}
+                        )}
+                      />
+                    );
+                  })}
+                </TabItemsDirective>
+              </TabComponent>
             </div>
           ) : (
-            <p className="text-[#6B6B8A] text-sm">Menu not available for {DAY_LABELS[selectedDay]}</p>
+            <p className="text-slate-500 dark:text-[#6B6B8A] text-sm">Menu not available for {DAY_LABELS[selectedDay]}</p>
           )}
         </div>
 
         <div className="space-y-4">
           {/* Specials */}
           {specials.length > 0 && (
-            <div className="glass-card p-4">
+            <div className="glass-card p-4 bg-white dark:bg-[#16161E]">
               <h3 className="font-semibold text-sm mb-3 text-[#7C6FF7]">⭐ Weekly Specials</h3>
               <div className="space-y-3">
                 {specials.map((s, i) => (
-                  <div key={i} className="py-2 border-b border-[#E4E2F0] last:border-0">
+                  <div key={i} className="py-2 border-b border-[#E4E2F0] dark:border-white/[0.08] last:border-0">
                     <div className="flex items-center gap-2 mb-1">
                       <span className={s.veg ? 'badge-veg' : 'badge-nonveg'} />
-                      <p className="text-xs font-medium text-[#1A1A2E]">{s.name}</p>
+                      <p className="text-xs font-medium text-slate-800 dark:text-white">{s.name}</p>
                       {s.price && <span className="ml-auto text-xs text-[#6BCB8B]">₹{s.price}</span>}
                     </div>
-                    <p className="text-[11px] text-[#6B6B8A] leading-snug">{s.description}</p>
+                    <p className="text-[11px] text-slate-500 dark:text-white/60 leading-snug">{s.description}</p>
                   </div>
                 ))}
               </div>

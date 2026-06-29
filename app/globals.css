@@ -1,3 +1,12 @@
+@import "@syncfusion/ej2-base/styles/tailwind.css";
+@import "@syncfusion/ej2-buttons/styles/tailwind.css";
+@import "@syncfusion/ej2-calendars/styles/tailwind.css";
+@import "@syncfusion/ej2-dropdowns/styles/tailwind.css";
+@import "@syncfusion/ej2-inputs/styles/tailwind.css";
+@import "@syncfusion/ej2-navigations/styles/tailwind.css";
+@import "@syncfusion/ej2-popups/styles/tailwind.css";
+@import "@syncfusion/ej2-grids/styles/tailwind.css";
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
@@ -17,6 +26,70 @@
   --warning: #F5C97A;
   --error: #F28B82;
   --ai-bg: #F0EEFF;
+}
+
+.dark {
+  --bg: #0D0D12;
+  --card: #16161E;
+  --accent: #8B5CF6;
+  --accent-light: rgba(139, 92, 246, 0.15);
+  --secondary: #1F2937;
+  --border: rgba(255, 255, 255, 0.08);
+  --text-primary: #F3F4F6;
+  --text-secondary: #9CA3AF;
+  --success: #34D399;
+  --warning: #FBBF24;
+  --error: #F87171;
+  --ai-bg: #1A1A26;
+}
+
+/* Smooth Theme Transitions */
+body, header, aside, .glass-card, button, input, textarea, a, span, p, h1, h2, h3 {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Dark Mode Tailwind Class overrides */
+.dark .bg-white {
+  background-color: var(--card) !important;
+}
+.dark .bg-\[\#F9F8FF\] {
+  background-color: var(--bg) !important;
+}
+.dark .bg-\[\#F0EEFF\] {
+  background-color: var(--ai-bg) !important;
+}
+.dark .bg-\[\#E8E6FF\] {
+  background-color: var(--accent-light) !important;
+}
+.dark .text-\[\#1A1A2E\] {
+  color: var(--text-primary) !important;
+}
+.dark .text-\[\#6B6B8A\] {
+  color: var(--text-secondary) !important;
+}
+.dark .text-\[\#7C6FF7\] {
+  color: var(--accent) !important;
+}
+.dark .border-\[\#E4E2F0\] {
+  border-color: var(--border) !important;
+}
+.dark .border-b-\[\#E4E2F0\] {
+  border-bottom-color: var(--border) !important;
+}
+.dark .border-r-\[\#E4E2F0\] {
+  border-right-color: var(--border) !important;
+}
+.dark .border-t-\[\#E4E2F0\] {
+  border-top-color: var(--border) !important;
+}
+.dark .hover\:bg-\[\#F0EEFF\]:hover {
+  background-color: var(--ai-bg) !important;
+}
+.dark .hover\:bg-\[\#DDD9FF\]:hover {
+  background-color: var(--border) !important;
+}
+.dark .hover\:text-\[\#7C6FF7\]:hover {
+  color: var(--accent) !important;
 }
 
 * {
@@ -186,4 +259,117 @@ body {
   color: var(--text-primary);
   margin-bottom: 0.4em;
   margin-top: 0.6em;
+}
+
+/* Syncfusion Dark Theme Overrides */
+.dark .e-input-group,
+.dark .e-input-group-wrapper,
+.dark .e-input,
+.dark .e-float-input,
+.dark .e-float-input.e-control-wrapper,
+.dark input.e-input,
+.dark textarea.e-input {
+  background-color: var(--card) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border) !important;
+}
+.dark .e-input::placeholder,
+.dark .e-input-group input::placeholder,
+.dark .e-float-input input::placeholder {
+  color: var(--text-secondary) !important;
+}
+.dark .e-input-group .e-input[disabled],
+.dark .e-input-group.e-disabled {
+  background-color: var(--ai-bg) !important;
+  color: var(--text-secondary) !important;
+}
+.dark .e-input-group:not(.e-success):not(.e-warning):not(.e-error):focus-within,
+.dark .e-input-group.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):focus-within {
+  border-color: var(--accent) !important;
+}
+
+.dark .e-dropdownlist,
+.dark .e-ddl,
+.dark .e-input-group.e-control-wrapper {
+  background-color: var(--card) !important;
+  color: var(--text-primary) !important;
+}
+.dark .e-ddl.e-popup,
+.dark .e-dropdownbase {
+  background-color: var(--card) !important;
+  border-color: var(--border) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+}
+.dark .e-dropdownbase .e-list-item {
+  color: var(--text-primary) !important;
+  background-color: var(--card) !important;
+}
+.dark .e-dropdownbase .e-list-item.e-hover {
+  background-color: var(--ai-bg) !important;
+  color: var(--accent) !important;
+}
+.dark .e-dropdownbase .e-list-item.e-active {
+  background-color: var(--secondary) !important;
+  color: var(--accent) !important;
+}
+
+.dark .e-grid {
+  background-color: var(--card) !important;
+  border-color: var(--border) !important;
+  color: var(--text-primary) !important;
+}
+.dark .e-grid .e-gridheader {
+  background-color: var(--card) !important;
+  border-color: var(--border) !important;
+  color: var(--text-primary) !important;
+  border-bottom-color: var(--border) !important;
+}
+.dark .e-grid .e-headercell,
+.dark .e-grid .e-headercell-value {
+  background-color: var(--card) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border) !important;
+}
+.dark .e-grid .e-gridcontent {
+  background-color: var(--card) !important;
+  color: var(--text-primary) !important;
+}
+.dark .e-grid .e-row {
+  background-color: var(--card) !important;
+  color: var(--text-primary) !important;
+}
+.dark .e-grid .e-rowcell {
+  color: var(--text-primary) !important;
+  border-color: var(--border) !important;
+  background-color: var(--card) !important;
+}
+.dark .e-grid tr.e-emptyrow td {
+  background-color: var(--card) !important;
+  color: var(--text-secondary) !important;
+}
+
+.dark .e-tab {
+  background-color: transparent !important;
+  border-color: var(--border) !important;
+}
+.dark .e-tab .e-tab-header {
+  background-color: var(--card) !important;
+  border-color: var(--border) !important;
+  border-bottom-color: var(--border) !important;
+}
+.dark .e-tab .e-tab-header .e-toolbar-item .e-tab-text {
+  color: var(--text-secondary) !important;
+}
+.dark .e-tab .e-tab-header .e-toolbar-item.e-active {
+  border-bottom-color: var(--accent) !important;
+}
+.dark .e-tab .e-tab-header .e-toolbar-item.e-active .e-tab-text {
+  color: var(--accent) !important;
+}
+.dark .e-tab .e-tab-header .e-toolbar-item.e-hover .e-tab-text {
+  color: var(--accent) !important;
+}
+.dark .e-tab .e-content {
+  background-color: var(--card) !important;
+  color: var(--text-primary) !important;
 }

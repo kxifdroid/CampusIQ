@@ -1,15 +1,19 @@
 "use client";
 
-import { Search, /*Bell,*/ Menu, Brain, LogOut } from "lucide-react";
+import { Search, /*Bell,*/ Menu, Brain, LogOut, Sun, Moon } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import { useTheme } from "@/components/theme/ThemeProvider";
+import { TextBoxComponent } from "@syncfusion/ej2-react-inputs";
+import { ButtonComponent } from "@syncfusion/ej2-react-buttons";
 
 interface NavbarProps {
   onMenuClick?: () => void;
 }
 
 export default function Navbar({ onMenuClick }: NavbarProps) {
+  const { theme, toggleTheme } = useTheme();
   const [searchFocused, setSearchFocused] = useState(false);
   const router = useRouter();
   const { data: session } = useSession();
@@ -37,7 +41,7 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
   }, [showProfile]);
 
   return (
-    <header className="h-16 flex items-center gap-4 px-6 border-b border-[#E4E2F0] bg-white sticky top-0 z-30">
+    <header className="h-16 flex items-center gap-4 px-6 border-b border-[#E4E2F0] dark:border-white/[0.08] bg-white dark:bg-[#16161E] sticky top-0 z-30">
       <button
         onClick={onMenuClick}
         className="lg:hidden text-[#6B6B8A] hover:text-[#7C6FF7] transition-colors"
@@ -60,14 +64,13 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
       >
         <Search
           size={15}
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6B6B8A] pointer-events-none"
+          className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6B6B8A] pointer-events-none z-10"
         />
-        <input
-          type="text"
+        <TextBoxComponent
           placeholder="Search campus resources..."
-          onFocus={() => setSearchFocused(true)}
-          onBlur={() => setSearchFocused(false)}
-          className="w-full pl-9 pr-4 py-2 bg-white border border-[#E4E2F0] rounded-lg text-sm placeholder:text-[#6B6B8A] focus:border-[#7C6FF7] focus:ring-1 focus:ring-[#7C6FF7] outline-none transition-all duration-300 text-[#1A1A2E]"
+          focus={() => setSearchFocused(true)}
+          blur={() => setSearchFocused(false)}
+          cssClass="e-outline w-full pl-9 bg-white dark:bg-[#16161E] rounded-lg text-sm placeholder:text-[#6B6B8A] text-[#1A1A2E]"
         />
       </div>
 
@@ -89,22 +92,22 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
       {showProfile && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-[#1A1A2E]/40 backdrop-blur-none" onClick={() => setShowProfile(false)} />
-          <div className="relative w-full max-w-md bg-white border border-[#E4E2F0] rounded-xl p-6 shadow-sm">
-            <h2 className="text-sm font-semibold text-[#1A1A2E] mb-4">Edit profile</h2>
+          <div className="relative w-full max-w-md bg-white dark:bg-[#16161E] border border-[#E4E2F0] dark:border-white/[0.08] rounded-xl p-6 shadow-sm">
+            <h2 className="text-sm font-semibold text-[#1A1A2E] dark:text-white mb-4">Edit profile</h2>
             <label className="block text-xs font-medium text-[#6B6B8A] mb-1">Name</label>
-            <input
+            <TextBoxComponent
               value={profileName}
-              onChange={(e) => setProfileName(e.target.value)}
-              className="w-full px-3 py-2 mb-4 bg-white border border-[#E4E2F0] rounded-lg text-sm placeholder:text-[#6B6B8A] focus:border-[#7C6FF7] focus:ring-1 focus:ring-[#7C6FF7] outline-none text-[#1A1A2E]"
+              change={(e: any) => setProfileName(e.value || "")}
+              cssClass="e-outline w-full mb-4 bg-white dark:bg-[#16161E] text-[#1A1A2E] dark:text-white"
             />
             <div className="flex gap-3 justify-end">
-              <button
+              <ButtonComponent
                 onClick={() => setShowProfile(false)}
-                className="bg-[#E8E6FF] text-[#7C6FF7] rounded-lg px-4 py-2 text-sm font-medium hover:bg-[#DDD9FF] transition-colors"
+                cssClass="e-flat bg-[#E8E6FF] text-[#7C6FF7] rounded-lg px-4 py-2 text-sm font-medium hover:bg-[#DDD9FF] transition-colors"
               >
                 Cancel
-              </button>
-              <button
+              </ButtonComponent>
+              <ButtonComponent
                 onClick={async () => {
                   setLoadingProfile(true);
                   try {
@@ -124,14 +127,22 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
                   }
                 }}
                 disabled={loadingProfile}
-                className="bg-[#7C6FF7] text-white rounded-lg px-4 py-2 text-sm font-medium hover:bg-[#6A5EE0] transition-colors disabled:opacity-50"
+                cssClass="e-primary bg-[#7C6FF7] text-white rounded-lg px-4 py-2 text-sm font-medium hover:bg-[#6A5EE0] transition-colors disabled:opacity-50"
               >
                 {loadingProfile ? "Saving..." : "Save"}
-              </button>
+              </ButtonComponent>
             </div>
           </div>
         </div>
       )}
+
+      <button
+        onClick={toggleTheme}
+        className="p-2 rounded-lg text-[#6B6B8A] hover:bg-[#F0EEFF] border border-[#E4E2F0] transition-colors"
+        aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+      >
+        {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
+      </button>
 
       <button
         onClick={() => signOut({ callbackUrl: "/auth/signin" })}

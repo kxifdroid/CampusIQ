@@ -4,6 +4,8 @@ import { useState, useRef, useEffect, KeyboardEvent } from 'react';
 import { Send, Sparkles } from 'lucide-react';
 import MessageBubble from './MessageBubble';
 import TypingIndicator from './TypingIndicator';
+import { TextBoxComponent } from '@syncfusion/ej2-react-inputs';
+import { ButtonComponent } from '@syncfusion/ej2-react-buttons';
 
 interface Message {
   id: string;
@@ -31,7 +33,6 @@ export default function ChatPanel({ prefilterTool, compact }: ChatPanelProps) {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -132,7 +133,7 @@ export default function ChatPanel({ prefilterTool, compact }: ChatPanelProps) {
     }
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleKeyDown = (e: any) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
@@ -140,14 +141,14 @@ export default function ChatPanel({ prefilterTool, compact }: ChatPanelProps) {
   };
 
   return (
-    <div className={`bg-white border border-[#E4E2F0] rounded-xl flex flex-col shadow-none ${compact ? 'h-[500px]' : 'h-[520px]'}`}>
+    <div className={`bg-white dark:bg-[#16161E] border border-[#E4E2F0] dark:border-white/[0.08] rounded-xl flex flex-col shadow-none ${compact ? 'h-[500px]' : 'h-[520px]'}`}>
       {/* Header */}
-      <div className="flex items-center gap-2 px-5 py-4 border-b border-[#E4E2F0]">
+      <div className="flex items-center gap-2 px-5 py-4 border-b border-[#E4E2F0] dark:border-white/[0.08]">
         <div className="w-7 h-7 rounded-lg bg-[#7C6FF7] flex items-center justify-center">
           <Sparkles size={13} className="text-white" />
         </div>
-        <h3 className="font-semibold text-sm text-[#1A1A2E]">Campus AI Assistant</h3>
-        <span className="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-[#E8E6FF] text-[#7C6FF7] border border-[#E4E2F0]">
+        <h3 className="font-semibold text-sm text-[#1A1A2E] dark:text-white">Campus AI Assistant</h3>
+        <span className="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-[#E8E6FF] dark:bg-[#8B5CF6]/15 text-[#7C6FF7] dark:text-[#8B5CF6] border border-[#E4E2F0] dark:border-white/[0.08]">
           Gemini Powered
         </span>
       </div>
@@ -157,7 +158,7 @@ export default function ChatPanel({ prefilterTool, compact }: ChatPanelProps) {
         {messages.length === 0 && (
           <div className="flex flex-col items-center justify-center h-full gap-6 pb-4">
             <div>
-              <div className="w-12 h-12 rounded-full bg-[#E8E6FF] border border-[#E4E2F0] flex items-center justify-center mx-auto mb-3">
+              <div className="w-12 h-12 rounded-full bg-[#E8E6FF] dark:bg-[#8B5CF6]/15 border border-[#E4E2F0] dark:border-white/[0.08] flex items-center justify-center mx-auto mb-3">
                 <Sparkles size={20} className="text-[#7C6FF7]" />
               </div>
               <p className="text-center text-sm text-[#6B6B8A]">Ask me anything about campus</p>
@@ -168,7 +169,7 @@ export default function ChatPanel({ prefilterTool, compact }: ChatPanelProps) {
                 <button
                   key={i}
                   onClick={() => sendMessage(prompt)}
-                  className="text-left text-xs px-3 py-2.5 rounded-xl bg-white border border-[#E4E2F0] text-[#6B6B8A] hover:text-[#7C6FF7] hover:bg-[#F0EEFF] hover:border-[#7C6FF7]/30 transition-all duration-200 line-clamp-2"
+                  className="text-left text-xs px-3 py-2.5 rounded-xl bg-white dark:bg-[#16161E] border border-[#E4E2F0] dark:border-white/[0.08] text-[#6B6B8A] dark:text-white/60 hover:text-[#7C6FF7] hover:bg-[#F0EEFF] dark:hover:bg-[#8B5CF6]/15 hover:border-[#7C6FF7]/30 transition-all duration-200 line-clamp-2"
                 >
                   {prompt}
                 </button>
@@ -196,25 +197,23 @@ export default function ChatPanel({ prefilterTool, compact }: ChatPanelProps) {
       </div>
 
       {/* Input */}
-      <div className="px-4 py-3 border-t border-[#E4E2F0]">
-        <div className="flex items-end gap-2 bg-white border border-[#E4E2F0] rounded-xl px-4 py-2.5 focus-within:border-[#7C6FF7] transition-colors">
-          <textarea
-            ref={inputRef}
+      <div className="px-4 py-3 border-t border-[#E4E2F0] dark:border-white/[0.08]">
+        <div className="flex items-end gap-2 items-center">
+          <TextBoxComponent
+            multiline={true}
             value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
+            change={e => setInput(e.value || '')}
             placeholder="Ask about library, food, events, academics..."
-            rows={1}
-            className="flex-1 bg-transparent text-sm text-[#1A1A2E] placeholder-[#6B6B8A] resize-none outline-none max-h-24 leading-relaxed"
-            style={{ height: 'auto' }}
+            cssClass="e-outline flex-1 text-sm text-[#1A1A2E] dark:text-white"
+            htmlAttributes={{ rows: "1" }}
           />
-          <button
+          <ButtonComponent
             onClick={() => sendMessage()}
             disabled={!input.trim() || isLoading}
-            className="w-8 h-8 rounded-lg bg-[#7C6FF7] flex items-center justify-center flex-shrink-0 hover:bg-[#6A5EE0] disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
+            cssClass="e-primary w-8 h-8 rounded-lg bg-[#7C6FF7] flex items-center justify-center flex-shrink-0 hover:bg-[#6A5EE0] disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
           >
-            <Send size={14} className="text-white" />
-          </button>
+            <Send size={14} className="text-white inline-block" />
+          </ButtonComponent>
         </div>
         <p className="text-[10px] text-[#6B6B8A]/60 text-center mt-1.5">Enter to send · Shift+Enter for new line</p>
       </div>
